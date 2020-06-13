@@ -309,7 +309,7 @@ public class ChatFileDlg extends JFrame implements BaseLayer {
 				int ret = chooser.showOpenDialog(null);
 				if (ret != JFileChooser.APPROVE_OPTION) {
 					JOptionPane.showMessageDialog(null, "파일을 선택하지 않았습니다.", "경고", JOptionPane.WARNING_MESSAGE);
-					File_send_Button.setEnabled(false);
+					//File_send_Button.setEnabled(false);
 				}
 				file = chooser.getSelectedFile();
 				fileNameField.setText(file.getPath());
