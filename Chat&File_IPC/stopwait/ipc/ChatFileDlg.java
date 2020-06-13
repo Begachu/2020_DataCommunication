@@ -224,7 +224,7 @@ public class ChatFileDlg extends JFrame implements BaseLayer {
 		Chat_send_Button = new JButton("전송");
 		Chat_send_Button.setBounds(270, 230, 80, 20);
 		Chat_send_Button.addActionListener(new setAddressListener());
-		filePanel.add(Chat_send_Button);// chatting send button
+		chattingPanel.add(Chat_send_Button);// chatting send button
 
 		this.Setting_file_Button = new JButton("파일 선택");
 		Setting_file_Button.setBounds(275, 20, 75, 25);
