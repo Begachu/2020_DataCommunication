@@ -6,10 +6,9 @@
 <JVMSearchPath>jdkpath</JVMSearchPath>
 <JVMSearchPath>exepath</JVMSearchPath>
 <JVMSearchPath>jview</JVMSearchPath>
-<arguments></arguments>
 <embeddedJar>true</embeddedJar>
 <executableName><![CDATA[
-chat&fileIPC.exe]]>
+ chat&fileIPC_test.exe]]>
 </executableName>
 <initialMemoryHeap>-1</initialMemoryHeap>
 <jarLocation>ChatFileIPC.jar</jarLocation>
@@ -25,7 +24,7 @@ Please download it at http://www.java.com</value>
 </skeletonProperties>
 <skeletonProperties>
 <key>PressKey</key>
-<value>0</value>
+<value>1</value>
 </skeletonProperties>
 <skeletonProperties>
 <key>Debug</key>
