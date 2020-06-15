@@ -55,7 +55,7 @@ public class ChatFileDlg extends JFrame implements BaseLayer {
 
 	JTextField fileNameField;
 	ProgressBar progressBar;
-	
+
 	File file;
 	JFileChooser chooser;
 
@@ -70,10 +70,9 @@ public class ChatFileDlg extends JFrame implements BaseLayer {
 		m_LayerMgr.AddLayer(new NILayer("NI"));
 		m_LayerMgr.AddLayer(new EthernetLayer("Ethernet"));
 		m_LayerMgr.AddLayer(new ChatAppLayer("ChatApp"));
-		m_LayerMgr.AddLayer(new FileAppLayer("FileApp"));
 		m_LayerMgr.AddLayer(new ChatFileDlg("GUI"));
 
-		m_LayerMgr.ConnectLayers(" NI ( *Ethernet ( *ChatApp *FileApp (*GUI ) ) )");
+		m_LayerMgr.ConnectLayers(" NI ( *Ethernet ( *ChatApp ( *GUI ) ) )");
 	}
 
 	public ChatFileDlg(String pName) {
@@ -88,8 +87,8 @@ public class ChatFileDlg extends JFrame implements BaseLayer {
 		contentPane.setLayout(null);
 
 		JPanel chattingPanel = new JPanel();// chatting panel
-		chattingPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "채팅", TitledBorder.LEADING,
-				TitledBorder.TOP, null, new Color(0, 0, 0)));
+		chattingPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "chatting",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		chattingPanel.setBounds(10, 5, 360, 276);
 		contentPane.add(chattingPanel);
 		chattingPanel.setLayout(null);
@@ -127,7 +126,7 @@ public class ChatFileDlg extends JFrame implements BaseLayer {
 		fileNameField.setBounds(10, 20, 260, 25);
 		filePanel.add(fileNameField);
 		fileNameField.setEnabled(false);
-		
+
 		progressBar = new ProgressBar();
 		this.progressBar.file_progress = new JProgressBar(JProgressBar.VERTICAL, 0, 100);
 		this.progressBar.file_progress.setBounds(10, 50, 260, 25);
@@ -135,8 +134,8 @@ public class ChatFileDlg extends JFrame implements BaseLayer {
 		// file panel end
 
 		JPanel settingPanel = new JPanel(); // Setting 관련 패널
-		settingPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "설정", TitledBorder.LEADING,
-				TitledBorder.TOP, null, new Color(0, 0, 0)));
+		settingPanel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "setting",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		settingPanel.setBounds(380, 5, 236, 371);
 		contentPane.add(settingPanel);
 		settingPanel.setLayout(null);
@@ -238,7 +237,6 @@ public class ChatFileDlg extends JFrame implements BaseLayer {
 		this.File_send_Button.setEnabled(false);
 
 		setVisible(true);
-
 	}
 
 	class setAddressListener implements ActionListener {
@@ -347,17 +345,8 @@ public class ChatFileDlg extends JFrame implements BaseLayer {
 			byte[] data = input; // byte 단위의 input data
 			Text = new String(data); // 아래층에서 올라온 메시지를 String text로 변환해줌
 			ChattingArea.append("[RECV] : " + Text + "\n"); // 채팅창에 수신메시지를 보여줌
-			return true;
+			return false;
 		}
-		return false;
-	}
-	
-	public boolean FileReceive(int receivedLength) {
-		if(receivedLength==this.progressBar.value) {
-			ChattingArea.append("파일 수신 및 생성 완료\n"); // 채팅창에 수신메시지를 보여줌
-			return true;
-		}
-		ChattingArea.append("파일 수신 실패!\n"); // 채팅창에 수신메시지를 보여줌
 		return false;
 	}
 
@@ -404,8 +393,9 @@ public class ChatFileDlg extends JFrame implements BaseLayer {
 	public void SetUpperUnderLayer(BaseLayer pUULayer) {
 		this.SetUpperLayer(pUULayer);
 		pUULayer.SetUnderLayer(this);
-	}
 
+	}
+	
 	public File getFile() {
 		// TODO Auto-generated method stub
 		return this.file;
