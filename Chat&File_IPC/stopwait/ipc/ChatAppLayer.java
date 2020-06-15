@@ -12,7 +12,6 @@ public class ChatAppLayer implements BaseLayer {
 
     private byte[] fragBytes;
     private int fragCount = 0;
-    private ArrayList<Boolean> ackChk = new ArrayList<Boolean>();
 
     private class _CHAT_APP {
         byte[] capp_totlen;
@@ -33,7 +32,6 @@ public class ChatAppLayer implements BaseLayer {
         // TODO Auto-generated constructor stub
         pLayerName = pName;
         ResetHeader();
-        ackChk.add(true);
     }
 
     private void ResetHeader() {
@@ -59,17 +57,6 @@ public class ChatAppLayer implements BaseLayer {
         input = cpyInput;
         return input;
     }
-
-    private void waitACK() { //ACK 체크
-        while (ackChk.size() <= 0) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        ackChk.remove(0);
-    }
     
     private void fragSend(byte[] input, int length) {
         byte[] bytes = new byte[1456];
@@ -87,7 +74,6 @@ public class ChatAppLayer implements BaseLayer {
         m_sHeader.capp_type = (byte) (0x02);
         m_sHeader.capp_totlen = intToByte2(1456);
         for(i=1; i<maxLen; i++) {
-        	waitACK();
         	if(i+1<maxLen && length%1456 == 0)
         		m_sHeader.capp_type = (byte)(0x03);
         	System.arraycopy(input, 1456*i, bytes, 0, 1456);
@@ -96,7 +82,6 @@ public class ChatAppLayer implements BaseLayer {
         }
 
         if (length % 1456 != 0) {
-        	waitACK();
             m_sHeader.capp_type = (byte) (0x03);
             /*과제  */
             m_sHeader.capp_totlen = intToByte2(length%1456);
@@ -112,9 +97,6 @@ public class ChatAppLayer implements BaseLayer {
         m_sHeader.capp_totlen = intToByte2(length);
         m_sHeader.capp_type = (byte) (0x00);
  
-        /*  과제  
-         */
-        waitACK();	//ACK가 들어오는지 확인
         if(length > 1456) {	//배열의 길이 확인
         	//단편화가 필요한 경우이므로 아래를 통해 단편화 시도
         	fragSend(input, length);
@@ -128,11 +110,6 @@ public class ChatAppLayer implements BaseLayer {
     public synchronized boolean Receive(byte[] input) {
         byte[] data, tempBytes;
         int tempType = 0;
-
-        if (input == null) {
-        	ackChk.add(true);
-        	return true;
-        }
         
         tempType |= (byte) (input[2] & 0xFF);
         
@@ -158,7 +135,6 @@ public class ChatAppLayer implements BaseLayer {
         		}
         	}
         }
-        this.GetUnderLayer().Send(null, 0); // ack 송신
         return true;
     }
     

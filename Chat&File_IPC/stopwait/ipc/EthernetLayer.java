@@ -65,9 +65,7 @@ public class EthernetLayer implements BaseLayer {
 
 	// 브로드 캐스트일 경우, type이 0xff
 	public boolean Send(byte[] input, int length) {
-		if (input == null && length == 0) // ack
-			m_sHeader.enet_type = intToByte2(0x0102);
-		else if (isBroadcast(m_sHeader.enet_dstaddr.addr)) // broadcast
+		if (isBroadcast(m_sHeader.enet_dstaddr.addr)) // broadcast
 			m_sHeader.enet_type = intToByte2(0x01ff);
 		else // nomal
 			m_sHeader.enet_type = intToByte2(0x0101);
@@ -84,9 +82,7 @@ public class EthernetLayer implements BaseLayer {
 	}
 
 	public boolean fileSend(byte[] input, int length) {
-		if (input == null && length == 0x0202) // ack
-			m_sHeader.enet_type = intToByte2(2);
-		else if (isBroadcast(m_sHeader.enet_dstaddr.addr)) // broadcast
+		if (isBroadcast(m_sHeader.enet_dstaddr.addr)) // broadcast
 			m_sHeader.enet_type = intToByte2(0x02ff);
 		else // nomal
 			m_sHeader.enet_type = intToByte2(0x0201);
@@ -101,9 +97,7 @@ public class EthernetLayer implements BaseLayer {
 		int temp_type = byte2ToInt(input[12], input[13]);
 
 		if (temp_type < 0x0200) {
-			if (temp_type == 0x0102) {
-				this.GetUpperLayer(0).Receive(null);
-			} else if (temp_type == 0x0101) {
+			if (temp_type == 0x0101) {
 				if (chkAddr(input) || (isBroadcast(input)) || !isMyPacket(input)) {
 					data = this.RemoveEthernetHeader(input, input.length);
 					this.GetUpperLayer(0).Receive(data);
@@ -113,9 +107,7 @@ public class EthernetLayer implements BaseLayer {
 			}
 			return false;
 		}else if (temp_type < 0x0300) {
-			if (temp_type == 0x0202) {
-				this.GetUpperLayer(1).Receive(null);
-			} else if (temp_type == 0x0201) {
+			if (temp_type == 0x0201) {
 				if (chkAddr(input) || (isBroadcast(input)) || !isMyPacket(input)) {
 					data = this.RemoveEthernetHeader(input, input.length);
 					this.GetUpperLayer(1).Receive(data);
