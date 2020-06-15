@@ -101,7 +101,6 @@ public class EthernetLayer implements BaseLayer {
 				if (chkAddr(input) || (isBroadcast(input)) || !isMyPacket(input)) {
 					data = this.RemoveEthernetHeader(input, input.length);
 					this.GetUpperLayer(0).Receive(data);
-					this.Send(null, 0);
 					return true;
 				}
 			}
@@ -111,7 +110,6 @@ public class EthernetLayer implements BaseLayer {
 				if (chkAddr(input) || (isBroadcast(input)) || !isMyPacket(input)) {
 					data = this.RemoveEthernetHeader(input, input.length);
 					this.GetUpperLayer(1).Receive(data);
-					this.Send(null, 0);
 					return true;
 				}
 			}

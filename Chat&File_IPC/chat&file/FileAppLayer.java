@@ -97,7 +97,6 @@ public class FileAppLayer implements BaseLayer {
     public boolean fileInfoSend(byte[] input, int length) { // 파일 정보 송신 함수
         this.setFileMsgType(0); // 파일 정보 송신임을 나타냄
         this.Send(input, length); // 파일 정보 송신
-
         return true;
     }
 
@@ -220,7 +219,9 @@ public class FileAppLayer implements BaseLayer {
                 fileByteList.add(this.calcSeqNum(input), data);
                 try(FileOutputStream fileOutputStream = new FileOutputStream(file)) {
                     fileOutputStream.write(fileByteList.get(0));
+                    ((ChatFileDlg)this.GetUpperLayer(0)).ChattingArea.append("파일 수신 및 생성 완료\n");
                 } catch (IOException e) {
+                	((ChatFileDlg)this.GetUpperLayer(0)).ChattingArea.append("파일 수신 실패\n");
                     e.printStackTrace();
                 }
             } else {
