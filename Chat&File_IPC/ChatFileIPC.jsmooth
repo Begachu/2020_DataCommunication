@@ -6,12 +6,13 @@
 <JVMSearchPath>jdkpath</JVMSearchPath>
 <JVMSearchPath>exepath</JVMSearchPath>
 <JVMSearchPath>jview</JVMSearchPath>
+<arguments></arguments>
 <embeddedJar>true</embeddedJar>
 <executableName><![CDATA[
- chat&fileIPC_test.exe]]>
+ chat&fileIPC_test(x64).exe]]>
 </executableName>
 <initialMemoryHeap>-1</initialMemoryHeap>
-<jarLocation>ChatFileIPC.jar</jarLocation>
+<jarLocation>ChatFileIPC(2).jar</jarLocation>
 <mainClassName>ChatFileDlg</mainClassName>
 <maximumMemoryHeap>-1</maximumMemoryHeap>
 <maximumVersion></maximumVersion>
