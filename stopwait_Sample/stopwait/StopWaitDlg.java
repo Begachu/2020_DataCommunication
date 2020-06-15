@@ -58,8 +58,8 @@ public class StopWaitDlg extends JFrame implements BaseLayer {
 		m_LayerMgr.AddLayer(new EthernetLayer("Ethernet"));
 		m_LayerMgr.AddLayer(new ChatAppLayer("ChatApp"));
 		m_LayerMgr.AddLayer(new StopWaitDlg("GUI"));
-		
-		m_LayerMgr.ConnectLayers(" NI ( *Ethernet ( *ChatApp (*GUI ) ) )");
+
+		m_LayerMgr.ConnectLayers(" NI ( *Ethernet ( *ChatApp ( *GUI ) ) )");
 	}
 
 	public StopWaitDlg(String pName) {
