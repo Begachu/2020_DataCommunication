@@ -1,5 +1,3 @@
-
-
 import java.util.ArrayList;
 
 public class ChatAppLayer implements BaseLayer {
@@ -69,7 +67,7 @@ public class ChatAppLayer implements BaseLayer {
         }
         ackChk.remove(0);
     }
-  /**/
+
     private void fragSend(byte[] input, int length) {
         byte[] bytes = new byte[10];
         int i = 0;
@@ -105,14 +103,12 @@ public class ChatAppLayer implements BaseLayer {
             this.GetUnderLayer().Send(bytes, bytes.length);
         }
     }
- 
+    
     public boolean Send(byte[] input, int length) {
         byte[] bytes;
         m_sHeader.capp_totlen = intToByte2(length);
         m_sHeader.capp_type = (byte) (0x00);
- 
-        /*  과제  
-         */
+
         waitACK();	//ACK가 들어오는지 확인
         if(length > 10) {	//배열의 길이 확인
         	//단편화가 필요한 경우이므로 아래를 통해 단편화 시도
@@ -123,7 +119,7 @@ public class ChatAppLayer implements BaseLayer {
         }
         return true;
     }
- 
+    
     public synchronized boolean Receive(byte[] input) {
         byte[] data, tempBytes;
         int tempType = 0;
